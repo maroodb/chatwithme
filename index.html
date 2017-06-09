@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chat With me!</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+
+	
+
+
+<div class="container">
+  <h2>Chat With me</h2>
+  
+  <form id="formulaire_chat" action="." method="post">
+    <div class="form-group">
+      <label >ChatRoom:</label>
+      <textarea class="form-control" rows="5" id="messages"></textarea>
+    </div>
+    <div class="row">
+    <div class="col-md-10">
+    	<input type="text" class="form-control" id="chatbox" placeholder="enter your message here..">
+    </div>
+    	<div class="col-md-2">
+    		 <input type="submit" class="btn  btn-info" value="send" id="button">
+    	</div>
+    </div>
+    <div class="form-group">
+ 
+  
+ 
+</div>
+  </form>
+</div>
+
+
+
+
+
+        <script src="/socket.io/socket.io.js"></script>
+
+        <script>
+
+            var button = $("#button");
+            var chatbox = $("#chatbox");
+            var messages = $ ("#messages");
+            
+            var scrol_height = messages[0].scrollHeight ;
+           
+
+            var username = prompt('choose a username?');
+            var socket = io.connect('http://localhost:8080');
+
+
+            socket.emit('new_user', username) ; 
+
+            socket.on('notification', function (message) {
+
+            	 exist_text = messages.text() ;
+            	 messages.text(exist_text+ "\n"+ message);
+            	 
+            	   messages.scrollTop(messages[0].scrollHeight) ;     
+
+            })
+
+            socket.on('message', function (message) {
+            	exist_text = messages.text() ;
+            	 messages.text(exist_text+ "\n"+ message);
+                 messages.scrollTop(messages[0].scrollHeight) ;     	 
+            })
+            
+
+           
+
+           $('#formulaire_chat').submit(function () {
+
+                var message = $('#chatbox').val();
+
+                socket.emit('chatroom', message); 
+                exist_text = messages.text() ;
+            	messages.text(exist_text+"\n"+username+": " + message);
+                 messages.scrollTop(messages[0].scrollHeight) ;     
+                $('#chatbox').val('').focus(); 
+
+                return false; 
+
+            });
+
+            
+        </script>
+</body>
+</html>
