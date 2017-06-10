@@ -2,6 +2,8 @@
 
 var http = require('http');
 var fs = require('fs');
+var express = require('express');
+var app = express () ;
 
 
 
@@ -19,13 +21,14 @@ var server = http.createServer(function(req, res) {
 
 
 var io = require('socket.io').listen(server);
-
+console.log("hi");
 
 io.sockets.on('connection', function (socket) {
     console.log('new client is connected..');
 
     socket.on('new_user', function(username) {
 		socket.username = username ; 
+        console.log("username");
 		socket.broadcast.emit('notification', "...... "+username + " join the chatroom.") ;
 	});
 

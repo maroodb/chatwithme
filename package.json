@@ -1,0 +1,24 @@
+{
+
+    "name": "chatwithme",
+
+    "version": "0.1.0",
+
+    "dependencies": {
+
+        "express": "~3.3.4",
+
+        "socket.io": "~1.2.1",
+
+        "ent": "~0.1.0"
+
+    },
+
+    "author": "maroodb <marouen.dbouba@email.com>",
+
+    "description": "Chatroom with socket.io"
+
+}
+
+
+
